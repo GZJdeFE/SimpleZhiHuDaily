@@ -1,9 +1,29 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 	<title>ZhiHu Daily</title>
 </head>
-<body bgcolor="yellow">
-
+<body>
+<p>Count:<output id="result"></output></p>
+<button onclick="startWorker()">Start Count</button>
+<button onclick="stopWorker()">Stop Count</button>
+<script type="text/javascript">
+	var w;
+	function startWorker() {
+		if (typeof(Worker)!=="undefined") {
+			if (typeof(w)=="undefined") {
+				w=new Worker();	
+			};
+			w.onmessage=function(event) {
+				document.getElementById("result").innerHTML=event.data;
+			}
+		} else {
+			document.getElementById("result").innerHTML="Not Support!";
+		};
+	}
+	function stopWorker() {
+		w.terminate();
+	}
+</script>
 </body>
 </html>
